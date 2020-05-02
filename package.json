@@ -11,7 +11,8 @@
 	],
 	"activationEvents": [
 		"onCommand:sn-edit.helloWorld",
-		"onCommand:sn-edit.configure"
+		"onCommand:sn-edit.configure",
+		"onCommand:sn-edit.createYaml"
 	],
 	"main": "./extension.js",
 	"contributes": {
@@ -23,6 +24,10 @@
 			{
 				"command": "sn-edit.configure",
 				"title": "sn-edit configuration"
+			},
+			{
+				"command": "sn-edit.createYaml",
+				"title": "sn-edit Create YAML Boilerplate"
 			}
 		]
 	},
