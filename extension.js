@@ -2,19 +2,14 @@ const vscode = require('vscode');
 const fs = require("fs");
 const path = require("path");
 
+const { getYaml } = require("./config_files/configuration");
+
 /**
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
 
-	let NEXT_TERM_ID = 1;
-	console.log("Terminals: " + vscode.window.terminals.length);
-
-	let disposable = vscode.commands.registerCommand('sn-edit.helloWorld', function () {
-		vscode.window.showInformationMessage('sn-edit test!');
-	});
-
-	let someVar = vscode.commands.registerCommand('sn-edit.configure', async () => {
+	/*let someVar = vscode.commands.registerCommand('sn-edit.configure', async () => {
 
 		function ensureTerminalExists() {
 			if (vscode.window.terminals.length === 0) {
@@ -54,29 +49,45 @@ function activate(context) {
 
 		}
 
-	});
+	}); */
 
-	let createYaml = vscode.commands.registerCommand('sn-edit.createYaml', function () {
+	context.subscriptions.push(vscode.commands.registerCommand('sn-edit.configure', async () => {
+
+		let username = await vscode.window.showInputBox({
+			placeHolder: 'ServiceNow Username'
+		});
+
+		let password = await vscode.window.showInputBox({
+			placeHolder: 'ServiceNow Password'
+		});
+
+		let instance_url = await vscode.window.showInputBox({
+			placeHolder: 'ServiceNow Instance URL'
+		});
+
+		let script_path = await vscode.window.showInputBox({
+			placeHolder: 'Script Path'
+		});
+
+		let db_path = await vscode.window.showInputBox({
+			placeHolder: 'Database Path'
+		});
 
 		const folderPath = vscode.workspace.workspaceFolders[0].uri
 			.toString()
 			.split(":")[1];
 
-		const htmlContent = `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-    <link rel="stylesheet" href="app.css" />
-</head>
-<body>
-    <script src="app.js"></script>
-</body>
-</html>`;
+			let config_object = {
+				username: username,
+				password: password,
+				servicenow_instance_url: instance_url,
+				script_path: script_path,
+				db_path: db_path
+			}
+	
+			let content = JSON.stringify(getYaml(config_object));
 
-		fs.writeFile(path.join(folderPath, "index.html"), htmlContent, err => {
+		fs.writeFile(path.join(folderPath, "edit.yaml"), content, err => {
 			if (err) {
 				return vscode.window.showErrorMessage(
 					"Failed to create boilerplate file!"
@@ -85,11 +96,7 @@ function activate(context) {
 			vscode.window.showInformationMessage("Created boilerplate files");
 		});
 
-	});
-
-	context.subscriptions.push(createYaml);
-	context.subscriptions.push(someVar);
-	context.subscriptions.push(disposable);
+	}));
 }
 
 exports.activate = activate;

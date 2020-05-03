@@ -1,0 +1,43 @@
+{
+  "db_path": "/Users/username/sn-edit/scripts.db",
+  "log_level": "info",
+  "rate_limiting_clearing": 2,
+  "rest_credentials": {
+    "password": "password",
+    "user": "user",
+    "xor_key": "randomxorkey",
+    "masked": false
+  },
+  "script_path": "/Users/username/path/to/scripts/folder/",
+  "servicenow_instance_url": "https://devxxxx.service-now.com/",
+  "tables": [
+    {
+      "fields": [
+        {
+          "field": "sys_id"
+        },
+        {
+          "field": "script"
+        },
+        {
+          "field": "sys_name"
+        }
+      ],
+      "table": "sys_script_include"
+    },
+    {
+      "fields": [
+        {
+          "field": "sys_id"
+        },
+        {
+          "field": "script"
+        },
+        {
+          "field": "sys_name"
+        }
+      ],
+      "table": "sys_script"
+    }
+  ]
+}

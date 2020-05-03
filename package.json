@@ -10,24 +10,14 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:sn-edit.helloWorld",
-		"onCommand:sn-edit.configure",
-		"onCommand:sn-edit.createYaml"
+		"onCommand:sn-edit.configure"
 	],
 	"main": "./extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "sn-edit.helloWorld",
-				"title": "Hello World"
-			},
-			{
 				"command": "sn-edit.configure",
-				"title": "sn-edit configuration"
-			},
-			{
-				"command": "sn-edit.createYaml",
-				"title": "sn-edit Create YAML Boilerplate"
+				"title": "sn-edit Configuration Setup"
 			}
 		]
 	},
