@@ -1,42 +1,45 @@
+/**
+ * @param {{ db_path: string; password: string; user: string; script_path: string; servicenow_instance_url: string; }} config
+ */
 const getYaml = (config) => {
 
   let config_yaml = {
-    "db_path": config.db_path,
-    "log_level": "info",
-    "rate_limiting_clearing": 2,
-    "rest_credentials": {
-      "password": config.password,
-      "user": config.user,
-      "xor_key": "randomxorkey",
-      "masked": false
+    db_path: config.db_path,
+    log_level: "info",
+    rate_limiting_clearing: 2,
+    rest_credentials: {
+      password: config.password,
+      user: config.user,
+      xor_key: "randomxorkey",
+      masked: false
     },
-    "script_path": config.script_path,
-    "servicenow_instance_url": config.servicenow_instance_url,
-    "tables": [{
-        "fields": [{
-            "field": "sys_id"
+    script_path: config.script_path,
+    servicenow_instance_url: config.servicenow_instance_url,
+    tables: [{
+        fields: [{
+            field: "sys_id"
           },
           {
-            "field": "script"
+            field: "script"
           },
           {
-            "field": "sys_name"
+            field: "sys_name"
           }
         ],
-        "table": "sys_script_include"
+        table: "sys_script_include"
       },
       {
-        "fields": [{
-            "field": "sys_id"
+        fields: [{
+            field: "sys_id"
           },
           {
-            "field": "script"
+            field: "script"
           },
           {
-            "field": "sys_name"
+            field: "sys_name"
           }
         ],
-        "table": "sys_script"
+        table: "sys_script"
       }
     ]
   }

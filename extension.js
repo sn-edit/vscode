@@ -1,8 +1,13 @@
 const vscode = require('vscode');
 const fs = require("fs");
 const path = require("path");
+const yaml = require("js-yaml");
 
-const { getYaml } = require("./config_files/configuration");
+const {
+	getYaml
+} = require("./config_files/configuration");
+
+// const configurationCommand = require("./commands/configure");
 
 /**
  * @param {vscode.ExtensionContext} context
@@ -73,21 +78,22 @@ function activate(context) {
 			placeHolder: 'Database Path'
 		});
 
+		let config_object = {
+			user: username,
+			password: password,
+			servicenow_instance_url: instance_url,
+			script_path: script_path,
+			db_path: db_path
+		}
+
+		let content = getYaml(config_object);
+
 		const folderPath = vscode.workspace.workspaceFolders[0].uri
 			.toString()
 			.split(":")[1];
 
-			let config_object = {
-				username: username,
-				password: password,
-				servicenow_instance_url: instance_url,
-				script_path: script_path,
-				db_path: db_path
-			}
-	
-			let content = JSON.stringify(getYaml(config_object));
-
-		fs.writeFile(path.join(folderPath, "edit.yaml"), content, err => {
+		let yamlStr = yaml.safeDump(content);
+		fs.writeFile(path.join(folderPath, "configuration.yaml"), yamlStr, err => {
 			if (err) {
 				return vscode.window.showErrorMessage(
 					"Failed to create boilerplate file!"
@@ -97,6 +103,7 @@ function activate(context) {
 		});
 
 	}));
+
 }
 
 exports.activate = activate;
