@@ -58,54 +58,83 @@ function activate(context) {
 
 	context.subscriptions.push(vscode.commands.registerCommand('sn-edit.configure', async () => {
 
-		let username = await vscode.window.showInputBox({
-			placeHolder: 'ServiceNow Username'
-		});
-
-		let password = await vscode.window.showInputBox({
-			placeHolder: 'ServiceNow Password'
-		});
-
-		let instance_url = await vscode.window.showInputBox({
-			placeHolder: 'ServiceNow Instance URL'
-		});
-
-		let script_path = await vscode.window.showInputBox({
-			placeHolder: 'Script Path'
-		});
-
-		let db_path = await vscode.window.showInputBox({
-			placeHolder: 'Database Path'
-		});
-
-		let config_object = {
-			user: username,
-			password: password,
-			servicenow_instance_url: instance_url,
-			script_path: script_path,
-			db_path: db_path
+		/* Check if the user is in an open workspace */
+		if (vscode.workspace.workspaceFolders === undefined){
+			vscode.window.showErrorMessage("You need to open a workspace before you can configure sn-edit!");
 		}
 
-		let content = getYaml(config_object);
+		else {
 
-		const currentDirectory = vscode.workspace.workspaceFolders[0].uri.path;
-
-		const folderPath = currentDirectory + "/_config";
-
-		let yamlStr = yaml.safeDump(content);
-
-		if (!fs.existsSync(folderPath)) {
-			fs.mkdirSync(folderPath);
-		}
-
-		fs.writeFile(path.join(folderPath, "configuration.yaml"), yamlStr, err => {
-			if (err) {
-				return vscode.window.showErrorMessage(
-					"Failed to create boilerplate file!"
-				);
+			let username = await vscode.window.showInputBox({
+				placeHolder: 'ServiceNow Username',
+				validateInput: (text) => {
+					if (!text || text.length <= 0) {
+						return 'Please provide a username';
+					}
+					else {
+						return undefined;
+					}
+				}
+			});
+	
+			let password = await vscode.window.showInputBox({
+				placeHolder: 'ServiceNow Password',
+				password: true,
+				validateInput: (text) => {
+					if (!text || text.length <= 0) {
+						return 'Please provide a password';
+					}
+					else {
+						return undefined;
+					}
+				}
+			});
+	
+			let instance_url = await vscode.window.showInputBox({
+				prompt: "Enter the base URL for your instance",
+				placeHolder: 'ServiceNow Instance URL',
+				validateInput: (url) => {
+					if (!url || url.length <= 0) {
+						return 'Please provide the URL for your instance';
+					}
+					if (url.endsWith("/")) {
+						return 'Please remove the / from the end of this URL';
+					}
+					if (!url.endsWith(".com")) {
+						return 'Please provide the base url such as https://example.service-now.com';
+					}
+					else {
+						return undefined;
+					}
+				}
+			});
+	
+			const folderPath = vscode.workspace.workspaceFolders[0].uri.path + "/_config";
+	
+			/* Checks to see if a folder called _config already exists */
+			if (!fs.existsSync(folderPath)) 
+				fs.mkdirSync(folderPath);
+	
+			let config_object = {
+				user: username,
+				password: password,
+				url: instance_url,
+				root_directory: vscode.workspace.workspaceFolders[0].uri.path,
+				db: vscode.workspace.workspaceFolders[0].uri.path + "/_config/sn-edit-local.db"
 			}
-			vscode.window.showInformationMessage("Created boilerplate files");
-		});
+	
+			let yamlStr = yaml.safeDump(getYaml(config_object));
+	
+			fs.writeFile(path.join(folderPath, "config.yaml"), yamlStr, err => {
+				if (err) {
+					return vscode.window.showErrorMessage(
+						"Failed to create the sn-edit configuration yaml file!"
+					);
+				}
+				vscode.window.showInformationMessage("Created sn-edit configuration yaml file!");
+			});
+			
+		}
 
 	}));
 

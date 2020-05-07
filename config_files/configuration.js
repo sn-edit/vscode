@@ -1,48 +1,30 @@
 /**
- * @param {{ db_path: string; password: string; user: string; script_path: string; servicenow_instance_url: string; }} config
+ * @param {{ db: string; password: string; user: string; root_directory: string; url: string; }} config
  */
 const getYaml = (config) => {
 
-  let config_yaml = {
-    db_path: config.db_path,
-    log_level: "info",
-    rate_limiting_clearing: 2,
-    rest_credentials: {
-      password: config.password,
-      user: config.user,
-      xor_key: "randomxorkey",
-      masked: false
-    },
-    script_path: config.script_path,
-    servicenow_instance_url: config.servicenow_instance_url,
-    tables: [{
-        fields: [{
-            field: "sys_id"
-          },
-          {
-            field: "script"
-          },
-          {
-            field: "sys_name"
-          }
-        ],
-        table: "sys_script_include"
-      },
-      {
-        fields: [{
-            field: "sys_id"
-          },
-          {
-            field: "script"
-          },
-          {
-            field: "sys_name"
-          }
-        ],
-        table: "sys_script"
-      }
-    ]
-  }
+  let config_yaml = { app: 
+    { log_level: 'debug',
+      rate_limit: 2,
+      db: { path: config.db, initialised: false },
+      rest: 
+       { masked: false,
+         password: config.password,
+         url: config.url,
+         user: config.user,
+         xor_key: 'randomxorkey' },
+      root_directory: config.root_directory,
+      tables: 
+       [ { name: 'sys_script',
+           fields: 
+            [ { field: 'sys_id', extension: 'txt' },
+              { field: 'script', extension: 'js' },
+              { field: 'sys_name', extension: 'txt' } ] },
+         { name: 'sys_script_include',
+           fields: 
+            [ { field: 'sys_id', extension: 'txt' },
+              { field: 'script', extension: 'js' },
+              { field: 'sys_name', extension: 'txt' } ] } ] } };
 
   return config_yaml;
 
