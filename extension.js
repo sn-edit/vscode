@@ -125,13 +125,15 @@ function activate(context) {
 	
 			let yamlStr = yaml.safeDump(getYaml(config_object));
 	
-			fs.writeFile(path.join(folderPath, "config.yaml"), yamlStr, err => {
+			fs.writeFile(path.join(folderPath, ".sn-edit.yaml"), yamlStr, err => {
 				if (err) {
 					return vscode.window.showErrorMessage(
 						"Failed to create the sn-edit configuration yaml file!"
 					);
 				}
 				vscode.window.showInformationMessage("Created sn-edit configuration yaml file!");
+				vscode.window.activeTerminal.show();
+				vscode.window.activeTerminal.sendText("./sn-edit --help");
 			});
 			
 		}
