@@ -88,11 +88,18 @@ function activate(context) {
 
 		let content = getYaml(config_object);
 
-		const folderPath = vscode.workspace.workspaceFolders[0].uri
+		const currentDirectory = vscode.workspace.workspaceFolders[0].uri
 			.toString()
 			.split(":")[1];
 
+		const folderPath = currentDirectory + "/_config";
+
 		let yamlStr = yaml.safeDump(content);
+
+		if (!fs.existsSync('./_config')) {
+			fs.mkdirSync('./_config');
+		}
+
 		fs.writeFile(path.join(folderPath, "configuration.yaml"), yamlStr, err => {
 			if (err) {
 				return vscode.window.showErrorMessage(
