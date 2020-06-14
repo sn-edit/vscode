@@ -4,27 +4,31 @@
 const getYaml = (config) => {
 
   let config_yaml = { app: 
-    { log_level: 'debug',
-      rate_limit: 2,
-      db: { path: config.db, initialised: false },
-      rest: 
-       { masked: false,
-         password: config.password,
-         url: config.url,
-         user: config.user,
-         xor_key: 'randomxorkey' },
-      root_directory: config.root_directory,
+    { core: 
+       { log_level: 'debug',
+         rate_limit: 2,
+         db: { path: config.db, initialised: false },
+         rest: 
+          { masked: false,
+            password: config.password,
+            url: config.url,
+            user: config.user,
+            xor_key: 'randomxorkey' },
+         root_directory: config.root_directory },
       tables: 
        [ { name: 'sys_script',
+           unique_key: 'sys_name',
            fields: 
-            [ { field: 'sys_id', extension: 'txt' },
-              { field: 'script', extension: 'js' },
-              { field: 'sys_name', extension: 'txt' } ] },
+            [ { extension: 'txt', field: 'sys_id' },
+              { extension: 'js', field: 'script' },
+              { extension: 'txt', field: 'sys_name' } ] },
          { name: 'sys_script_include',
+           unique_key: 'sys_name',
            fields: 
-            [ { field: 'sys_id', extension: 'txt' },
-              { field: 'script', extension: 'js' },
-              { field: 'sys_name', extension: 'txt' } ] } ] } };
+            [ { extension: 'txt', field: 'sys_id' },
+              { extension: 'js', field: 'script' },
+              { extension: 'txt', field: 'sys_name' } ] } ] } }
+
 
   return config_yaml;
 
