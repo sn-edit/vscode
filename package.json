@@ -10,9 +10,11 @@
 		"Other"
 	],
 	"activationEvents": [
+		"*",
 		"onCommand:sn-edit.configure",
 		"onCommand:sn-edit.download",
-		"onCommand:sn-edit.upload"
+		"onCommand:sn-edit.upload",
+		"onCommand:sn-edit.version"
 	],
 	"main": "./extension.js",
 	"contributes": {
@@ -28,6 +30,10 @@
 			{
 				"command": "sn-edit.upload",
 				"title": "sn-edit Upload Script"
+			},
+			{
+				"command": "sn-edit.version",
+				"title": "sn-edit Version"
 			}
 		]
 	},
