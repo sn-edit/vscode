@@ -6,8 +6,9 @@ const yaml = require("js-yaml");
 const shell = require("shelljs");
 const { updateStatusBarItem } = require('./commands/display-updateset');
 const { versionCommand } = require('./commands/version');
-
-
+const { searchCMD } = require('./commands/search');
+const { runCommand } = require("./helpers/commands");
+const { tryParseJSON } = require('./helpers/json');
 
 const {
 	getYaml
@@ -23,43 +24,82 @@ const {
 function activate(context) {
 	const { subscriptions } = context;
 	/* Download */
-	// context.subscriptions.push(vscode.commands.registerCommand('sn-edit.download', async() => {
+	subscriptions.push(vscode.commands.registerCommand('sn-edit.download', async() => {
+		let options = {};
 
-	// 	let table = await vscode.window.showInputBox({
-	// 		prompt: "Table name, eg: sys_user",
-	// 		placeHolder: 'Table Name',
-	// 		ignoreFocusOut: true,
-	// 		validateInput: (text) => {
-	// 			if (!text || text.length <= 0) {
-	// 				return 'Please provide a valid table name';
-	// 			}
-	// 			else {
-	// 				return undefined;
-	// 			}
-	// 		}
-	// 	});
+		vscode.window.setStatusBarMessage(
+			`$(loading~spin) Loading and processing table data...`,
+			3000
+		);
 
-	// 	let sys_id = await vscode.window.showInputBox({
-	// 		placeHolder: 'Script sys_id',
-	// 		ignoreFocusOut: true,
-	// 		validateInput: (text) => {
+		// table name
+		options = {
+			placeholder:  "Select the table you want to see the fields for!"
+		};
+
+		let table = await searchCMD(options);
+
+		if (!table) {
+			return vscode.window.showErrorMessage(
+				"Please select a table so we are able to download your data!"
+			)
+		}
+
+		vscode.window.setStatusBarMessage(
+			`$(loading~spin) Loading entries from table ${table.name}`,
+			3000
+		);
+
+		options = {
+			table: table.name,
+			query: "active=true",
+			placeholder:  "Select the entry you would like to download!"
+		};
+
+		let table_entry = await searchCMD(options);
+
+		if (!table_entry) {
+			return vscode.window.showErrorMessage(
+				"Please select an entry so we are able to download your data!"
+			)
+		}
+
+		let tableName = table.name;
+		let sysID = table_entry.sys_id;
+
+		// run download command
+		const command = ["download", "--table", tableName, "--sys_id", sysID, "--json"];
+
+		// result is the array of jsons in this case
+		let commandResult = await runCommand(command);
+		
+		commandResult.data.forEach((res) => {
+			let resJSON = tryParseJSON(res);
+			
+			if (resJSON.level == "error" && resJSON.error) {
+				return vscode.window.showErrorMessage(
+					"There was an error while downloading your entry! (" + resJSON.error + ")",
+				);
+			}
+
+			if (resJSON && resJSON.table_name === tableName && resJSON.sys_id === sysID) {
+				result = tryParseJSON(resJSON.result);
 				
-	// 			if (!text || text.length <= 15) {
-	// 				return 'Please provide a valid sys_id';
-	// 			}
-	// 			else {
-	// 				return undefined;
-	// 			}
-	// 		}
-	// 	});
+				if (table_entry["unique_key"]) {
+					return vscode.window.showInformationMessage(
+						"Entry \"" + table_entry[table_entry["unique_key"]] + "\" from table " + tableName + "#" + sysID + " successfully downloaded!",
+					);
+				} else {
+					return vscode.window.showInformationMessage(
+						"Entry from table " + tableName + "[" + sysID + "] successfully downloaded!",
+					);
+				}
 
-	// 	shell.cd(workspacePath);
+				return
+			}
+		});
 
-	// 	const command = [snedit, "download", "--table", table, "--sys_id", sys_id, "--json"];
-
-	// 	console.log(shell.exec(command.join(" "), {silent:false}).stdout);
-
-	// }));
+	}));
 
 	// /* Upload */
 	// context.subscriptions.push(vscode.commands.registerCommand('sn-edit.upload', async () => {
@@ -227,6 +267,9 @@ function activate(context) {
 	// 	}
 
 	// }));
+
+	// search command
+	subscriptions.push(vscode.commands.registerCommand('sn-edit.search', searchCMD));
 
 	// status bar notification of the current update set
 	// displays the currently selected default update set for the actual scope

@@ -14,7 +14,8 @@
 		"onCommand:sn-edit.configure",
 		"onCommand:sn-edit.download",
 		"onCommand:sn-edit.upload",
-		"onCommand:sn-edit.version"
+		"onCommand:sn-edit.version",
+		"onCommand:sn-edit.search"
 	],
 	"main": "./extension.js",
 	"contributes": {
@@ -34,6 +35,10 @@
 			{
 				"command": "sn-edit.version",
 				"title": "sn-edit Version"
+			},
+			{
+				"command": "sn-edit.search",
+				"title": "sn-edit Search"
 			}
 		]
 	},

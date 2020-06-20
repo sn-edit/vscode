@@ -4,11 +4,8 @@ const { tryParseJSON } = require('../helpers/json');
 const { runCommand } = require("../helpers/commands");
 
 
-const updateStatusBarItem = (editor, statusbarItem) => {
-	if (editor && editor.document) {
-		statusbarItem.text = "Update set: N/A"
-	}
-
+const updateStatusBarItem = async (editor, statusbarItem) => {
+	let actualText = "Update set: N/A";
 	// set scopename to a default of global
 	let scopeName = "global";
 
@@ -23,14 +20,15 @@ const updateStatusBarItem = (editor, statusbarItem) => {
 	const command = ["updateset", "--list", "--scope", scopeName, "--json"];
 
 	// result is the array of jsons in this case
-	let commandResult = runCommand(command);
+	let commandResult = await runCommand(command);
+
+	// console.log("result", commandResult);
 
 	if (commandResult.error) {
 		// hide statusbar since no useful information will be provided anyway
 		statusbarItem.hide();
 		return vscode.window.showErrorMessage(
-			"Could not get the current update set!",
-			commandResult.error
+			"Could not get the current update set!"
 		);
 	}
 
@@ -38,7 +36,11 @@ const updateStatusBarItem = (editor, statusbarItem) => {
 		let resJSON = tryParseJSON(res);
 
 		if (resJSON && resJSON.current) {
-			statusbarItem.text = `SNEDIT $(files) Update set: ${resJSON.current.name}`
+			actualText = statusbarItem.text;
+			let newText = `SNEDIT $(files) Update set: ${resJSON.current.name}`;
+			if (newText != actualText) {
+				statusbarItem.text = newText;
+			}
 		} else {
 			// hide statusbar since no useful information will be provided anyway
 			statusbarItem.hide();
