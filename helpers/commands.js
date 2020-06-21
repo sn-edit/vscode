@@ -37,7 +37,7 @@ const runCommand = async (command) => {
             silent: false,
             async: true
         }, (code, stdout, stderr) => {
-            data = stdout;
+            let data = stdout;
 
             let result = [];
             result = data.split("\n");
@@ -54,6 +54,7 @@ const runCommand = async (command) => {
                     return
                 }
             }
+
             if (code === 0) {
                 resolve({
                     error: null,

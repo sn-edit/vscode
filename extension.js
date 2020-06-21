@@ -13,6 +13,8 @@ const { tryParseJSON } = require('./helpers/json');
 const {
 	getYaml
 } = require("./config_files/configuration");
+const { format } = require('path');
+const { initExtension } = require('./core/config');
 
 // const configurationCommand = require("./commands/configure");
 
@@ -73,6 +75,8 @@ function activate(context) {
 		// result is the array of jsons in this case
 		let commandResult = await runCommand(command);
 		
+		//TODO:  if commandResult.error != null then we have an error
+
 		commandResult.data.forEach((res) => {
 			let resJSON = tryParseJSON(res);
 			
@@ -83,11 +87,9 @@ function activate(context) {
 			}
 
 			if (resJSON && resJSON.table_name === tableName && resJSON.sys_id === sysID) {
-				result = tryParseJSON(resJSON.result);
-				
 				if (table_entry["unique_key"]) {
 					return vscode.window.showInformationMessage(
-						"Entry \"" + table_entry[table_entry["unique_key"]] + "\" from table " + tableName + "#" + sysID + " successfully downloaded!",
+						"Entry \"" + table_entry[table_entry["unique_key"]] + "\" from table " + tableName + " successfully downloaded!",
 					);
 				} else {
 					return vscode.window.showInformationMessage(
@@ -98,8 +100,85 @@ function activate(context) {
 				return
 			}
 		});
-
 	}));
+
+	// upload onsave
+	vscode.workspace.onDidSaveTextDocument(async (editor) => {
+		const engine = initExtension();
+		// get the sys_id of the current file
+		// get the table of the currently opened file
+		// call upload command
+
+		if (editor.fileName.indexOf(engine.workspacePath) == -1 || editor.fileName.indexOf(".sn-edit.yaml") >= 0) {
+			// run this only when we are in our workspacepath
+			// todo: make this more reliable and read it from yaml config instead
+			return
+		}
+		
+		vscode.window.setStatusBarMessage(
+			`$(loading~spin) Uploading file to instance`,
+			3000
+		);
+
+		console.log("EDITOR => ");
+		console.log(editor);
+		console.log("FILENAME::: = ", editor.fileName);
+
+		// set scopename to a default of global
+		let scopeName = "global";
+		let table = "";
+
+		let currentFileName = editor.fileName;
+		// split the file path based on the current OS's separator, windows and unix like differ
+		currentFileName = currentFileName.split(path.sep);
+		let name = "";
+
+		if (currentFileName[currentFileName.length - 4].length > 0) {
+			// select the scopename from the path, this might need reworking
+			scopeName = currentFileName[currentFileName.length - 4];
+			// here is usually the table name
+			table = currentFileName[currentFileName.length - 3];
+			name = currentFileName[currentFileName.length - 2];
+		}
+		let folderPath = currentFileName;
+		folderPath.splice(folderPath.length -1, 1);
+		folderPath = folderPath.join(path.sep);
+		let sysIDPath = folderPath + path.sep + "sys_id.txt";
+		// TODO, introduce some validation if path exists and there was any error
+		let sysID = fs.readFileSync(sysIDPath).toString();
+
+		console.log("DATA");
+		// scope is not needed for the upload, maybe sooner for the update set from the --list output
+		console.log("Scope name", scopeName);
+		console.log("Table", table);
+		console.log("Sys ID", sysID);
+		let fileBaseName = path.basename(editor.fileName);
+
+		let field = fileBaseName.substring(0, fileBaseName.lastIndexOf("."));
+
+		console.log("BASENAME::", fileBaseName);
+
+		const command = ["upload", "--table", table, "--sys_id", sysID, "--fields", field, "--json"];
+
+		let commandResult = await runCommand(command);
+
+		commandResult.data.forEach((res) => {
+			let resJSON = tryParseJSON(res);
+			
+			if (resJSON.level == "error" && resJSON.error) {
+				return vscode.window.showErrorMessage(
+					"There was an error while downloading your entry! (" + resJSON.error + ")",
+				);
+			}
+
+			if (resJSON && resJSON.table === table && resJSON.sys_id === sysID) {
+				return vscode.window.showInformationMessage(
+					"The changes for file " + name + " [" + field + "] in table " + table + " were successfully uploaded!",
+				);
+			}
+		});
+
+	});
 
 	// /* Upload */
 	// context.subscriptions.push(vscode.commands.registerCommand('sn-edit.upload', async () => {
