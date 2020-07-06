@@ -12,6 +12,7 @@ const runCommand = async (command) => {
     return new Promise((resolve, reject) => {
         const engine = initExtension();
         let json = false;
+
         if (!command || !(command instanceof Array)) {
             console.log("The params has to be an array of the parameters!");
             return
@@ -33,7 +34,7 @@ const runCommand = async (command) => {
         // run command
         console.debug("Running command", command);
         // TODO escape commands
-        let commandResult = engine.shell.exec(command.join(" "), {
+        engine.shell.exec(command.join(" "), {
             silent: false,
             async: true
         }, (code, stdout, stderr) => {

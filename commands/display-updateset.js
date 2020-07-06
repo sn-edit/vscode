@@ -8,7 +8,10 @@ const updateStatusBarItem = async (editor, statusbarItem) => {
 	let actualText = "Update set: N/A";
 	// set scopename to a default of global
 	let scopeName = "global";
-
+	
+	if (typeof editor == "undefined")
+		return
+	
 	let currentFileName = editor.document.fileName;
 	// split the file path based on the current OS's separator, windows and unix like differ
 	currentFileName = currentFileName.split(path.sep);
@@ -21,8 +24,6 @@ const updateStatusBarItem = async (editor, statusbarItem) => {
 
 	// result is the array of jsons in this case
 	let commandResult = await runCommand(command);
-
-	// console.log("result", commandResult);
 
 	if (commandResult.error) {
 		// hide statusbar since no useful information will be provided anyway

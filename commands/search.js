@@ -53,7 +53,7 @@ const searchCMD = async (options) => {
     // rewrite object to use for quickpick
     console.debug("Unique key " + uniqueKey);
 
-    console.debug("Found results" + result.result.length);
+    console.debug("Found results " + result.result.length);
 
     // add the table name to the label, since we can have many tables with the same label...
     result.result.forEach(el => {

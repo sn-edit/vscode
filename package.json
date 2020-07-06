@@ -13,9 +13,8 @@
 		"*",
 		"onCommand:sn-edit.configure",
 		"onCommand:sn-edit.download",
-		"onCommand:sn-edit.upload",
 		"onCommand:sn-edit.version",
-		"onCommand:sn-edit.search"
+		"onCommand:snedit.changeUpdateSet"
 	],
 	"main": "./extension.js",
 	"contributes": {
@@ -29,16 +28,8 @@
 				"title": "sn-edit Download Script"
 			},
 			{
-				"command": "sn-edit.upload",
-				"title": "sn-edit Upload Script"
-			},
-			{
 				"command": "sn-edit.version",
 				"title": "sn-edit Version"
-			},
-			{
-				"command": "sn-edit.search",
-				"title": "sn-edit Search"
 			}
 		]
 	},
