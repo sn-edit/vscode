@@ -16,5 +16,5 @@ const tryParseJSON =  (jsonString) => {
 };
 
 module.exports =  {
-    tryParseJSON
+    tryParseJSON: tryParseJSON
 }

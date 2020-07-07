@@ -1,6 +1,8 @@
 const vscode = require('vscode');
 const { searchCMD } = require('./search');
 const { setStatusbarMessage } = require('../helpers/statusbar');
+const { runCommand } = require("../helpers/commands");
+const { tryParseJSON } = require('../helpers/json');
 
 const downloadCMD = async() => {
     let options = {};

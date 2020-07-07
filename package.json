@@ -2,7 +2,9 @@
 	"name": "sn-edit",
 	"displayName": "sn-edit",
 	"description": "Servicenow Script Editor Engine (sn-edit.com)",
+	"publisher": "snedit",
 	"version": "0.0.1",
+	"repository": "https://github.com/sn-edit/vscode",
 	"engines": {
 		"vscode": "^1.44.0"
 	},
@@ -11,7 +13,6 @@
 	],
 	"activationEvents": [
 		"*",
-		"onCommand:sn-edit.configure",
 		"onCommand:sn-edit.download",
 		"onCommand:sn-edit.version",
 		"onCommand:snedit.changeUpdateSet"
@@ -19,10 +20,6 @@
 	"main": "./extension.js",
 	"contributes": {
 		"commands": [
-			{
-				"command": "sn-edit.configure",
-				"title": "sn-edit Configuration Setup"
-			},
 			{
 				"command": "sn-edit.download",
 				"title": "sn-edit Download Script"
