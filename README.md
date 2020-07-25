@@ -1,10 +1,12 @@
-# sn-edit README
+# sn-edit
 
 The extension provides a bridge between sn-edit and the Visual Studio Code UI. We've created a few simple commands that are useful for daily development and could be used while development. 
 
-The extension itself is useless before installing sn-edit. For the installation please refer to our [docs site](https://docs.sn-edit.com/#/getting-started/README) and follow the instructions.
+**For the extension to work correctly:**
+- Install **NodeJS** from the [Official Page](https://nodejs.org/en/download/) (At least the LTS version or anything newer)
+- Download the [sn-edit](https://docs.sn-edit.com/#/getting-started/README) application, for the instructions, please refer to our [docs site](https://docs.sn-edit.com/#/getting-started/README).
 
-After you install sn-edit, you need to generate a configuration file for your tables and fields you plan to use. Use this site for that, there are also references to our docs on what property has what kind of usage.
+After installing sn-edit, please use the [configuration generator](https://conf.sn-edit.com/) to download your config file.
 
 The capabilities include:
 - Downloading of entries
@@ -16,10 +18,6 @@ The capabilities include:
 - No support for creating new entries for now
 - We support searching for tables and their entries inside of vscode. After picking your entry, the entry gets downloaded locally
 - Support to run background scripts from local js files (Not supported by the extension yet, but supported by sn-edit)
-
-Extension setup notes:
-- Install NodeJS from the [Official Pages](https://nodejs.org/en/download/) (At least the LTS version or anything newer)
-- You will need to download and setup sn-edit before using this extension correctly. [Refer to the guide here for your platform!](https://docs.sn-edit.com/#/getting-started/README)
 
 **Note**: I am not really experienced with building Visual Studio Code extensions, so I am looking for someone that could take it over and maintain it. Basic JS knowledge and some VSCode experience is needed. If you are interested, please send me an email with some references on your work as of now and we can talk about it.
 

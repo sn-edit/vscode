@@ -25,6 +25,10 @@ function activate(context) {
 	// upload onsave
 	vscode.workspace.onDidSaveTextDocument(async (editor) => {
 		const engine = initExtension();
+		if (engine.error) {
+			return;
+		}
+
 		// get the sys_id of the current file
 		// get the table of the currently opened file
 		// call upload command
@@ -95,7 +99,7 @@ function activate(context) {
 	});
 
 	context.subscriptions.push(vscode.commands.registerCommand('sn-edit.configure', async () => {
-		vscode.env.openExternal(vscode.Uri.parse('https://config.sn-edit.com'));
+		vscode.env.openExternal(vscode.Uri.parse('https://conf.sn-edit.com'));
 	}));
 
 	// search command
@@ -114,6 +118,18 @@ function activate(context) {
 
 	// update set picker part
 	subscriptions.push(vscode.commands.registerCommand("snedit.changeUpdateSet", async () => {
+		// truncate update set data and force reload of it
+		const truncateCommand = ["updateset", "--truncate", "--json"];
+
+		let truncateCommandResult = await runCommand(truncateCommand);
+
+		if (truncateCommandResult.error) {
+			// hide statusbar since no useful information will be provided anyway
+			return vscode.window.showErrorMessage(
+				"Could not truncate update set data!"
+			);
+		}
+
 		// set scopename to a default of global
 		let scopeName = getScope(vscode.window.activeTextEditor);
 

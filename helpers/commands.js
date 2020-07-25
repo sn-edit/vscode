@@ -11,6 +11,11 @@ const {
 const runCommand = async (command) => {
     return new Promise((resolve, reject) => {
         const engine = initExtension();
+        
+        if (engine.error) {
+			return;
+		}
+
         let json = false;
 
         if (!command || !(command instanceof Array)) {
