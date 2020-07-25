@@ -1,5 +1,7 @@
 # sn-edit
 
+Download the extension [SN-EDIT - Servicenow Editor Engine](https://marketplace.visualstudio.com/items?itemName=SNEDIT.sn-edit)
+
 The extension provides a bridge between sn-edit and the Visual Studio Code UI. We've created a few simple commands that are useful for daily development and could be used while development. 
 
 **For the extension to work correctly:**
