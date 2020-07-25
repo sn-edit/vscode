@@ -2,22 +2,49 @@
 	"name": "sn-edit",
 	"displayName": "sn-edit",
 	"description": "Servicenow Script Editor Engine (sn-edit.com)",
+	"publisher": "snedit",
 	"version": "0.0.1",
+	"bugs": {
+		"url": "https://github.com/sn-edit/vscode/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sn-edit/vscode.git"
+	},
+	"homepage": "https://docs.sn-edit.com",
+	"license": "SEE LICENSE IN LICENSE",
+	"author": {
+		"name": "Richard Szolár <r@richardszolar.me>"
+	},
 	"engines": {
 		"vscode": "^1.44.0"
 	},
 	"categories": [
+		"Programming",
 		"Other"
 	],
+	"keywords": [
+		"servicenow",
+		"servicenow-extension",
+		"sn-edit",
+		"script editor"
+	],
 	"activationEvents": [
-		"onCommand:sn-edit.configure"
+		"*",
+		"onCommand:sn-edit.download",
+		"onCommand:sn-edit.version",
+		"onCommand:snedit.changeUpdateSet"
 	],
 	"main": "./extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "sn-edit.configure",
-				"title": "sn-edit Configuration Setup"
+				"command": "sn-edit.download",
+				"title": "sn-edit Download Script"
+			},
+			{
+				"command": "sn-edit.version",
+				"title": "sn-edit Version"
 			}
 		]
 	},
@@ -27,17 +54,19 @@
 		"test": "node ./test/runTest.js"
 	},
 	"devDependencies": {
-		"@types/vscode": "^1.44.0",
-		"@types/glob": "^7.1.1",
+		"@types/glob": "^7.1.3",
 		"@types/mocha": "^7.0.2",
-		"@types/node": "^13.11.0",
+		"@types/node": "^13.13.15",
+		"@types/vscode": "^1.47.0",
 		"eslint": "^6.8.0",
 		"glob": "^7.1.6",
 		"mocha": "^7.1.1",
-		"typescript": "^3.8.3",
+		"typescript": "^3.9.7",
 		"vscode-test": "^1.3.0"
 	},
 	"dependencies": {
-		"js-yaml": "^3.13.1"
+		"curlrequest": "^1.0.1",
+		"js-yaml": "^3.13.1",
+		"shelljs": "^0.8.4"
 	}
 }

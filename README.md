@@ -1,65 +1,24 @@
-# sn-edit README
+# sn-edit
 
-This is the README for your extension "sn-edit". After writing up a brief description, we recommend including the following sections.
+The extension provides a bridge between sn-edit and the Visual Studio Code UI. We've created a few simple commands that are useful for daily development and could be used while development. 
 
-## Features
+**For the extension to work correctly:**
+- Install **NodeJS** from the [Official Page](https://nodejs.org/en/download/) (At least the LTS version or anything newer)
+- Download the [sn-edit](https://docs.sn-edit.com/#/getting-started/README) application, for the instructions, please refer to our [docs site](https://docs.sn-edit.com/#/getting-started/README).
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+After installing sn-edit, please use the [configuration generator](https://conf.sn-edit.com/) to download your config file.
 
-For example if there is an image subfolder under your extension project workspace:
+The capabilities include:
+- Downloading of entries
+- Uploading entries onsave
+- Update set management, like displaying the currently selected update set and setting a new default one that would be used in subsequent calls in your session
+- To choose a different update set, just click on the right bottom on the update set name and you should be presented with a list of other update sets
+- We support basic authentication only but if there will be popular demand on other types, we are able to do it
+- We support scopes, that means your entries will be saved in the specific scope they belong to
+- No support for creating new entries for now
+- We support searching for tables and their entries inside of vscode. After picking your entry, the entry gets downloaded locally
+- Support to run background scripts from local js files (Not supported by the extension yet, but supported by sn-edit)
 
-\!\[feature X\]\(images/feature-x.png\)
+**Note**: I am not really experienced with building Visual Studio Code extensions, so I am looking for someone that could take it over and maintain it. Basic JS knowledge and some VSCode experience is needed. If you are interested, please send me an email with some references on your work as of now and we can talk about it.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+We invite every one of you to contribute to this project to make it better for you and for everyone else. 
