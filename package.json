@@ -17,10 +17,9 @@
 		"name": "Richard Szolár <r@richardszolar.me>"
 	},
 	"engines": {
-		"vscode": "^1.44.0"
+		"vscode": "^1.47.0"
 	},
 	"categories": [
-		"Programming",
 		"Other"
 	],
 	"keywords": [
