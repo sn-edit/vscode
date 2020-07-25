@@ -33,7 +33,7 @@ function activate(context) {
 		// get the table of the currently opened file
 		// call upload command
 
-		if (editor.fileName.indexOf(engine.workspacePath) == -1 || editor.fileName.indexOf(".sn-edit.yaml") >= 0) {
+		if (editor.fileName.indexOf(engine.workspacePath) === -1 || editor.fileName.indexOf(".sn-edit.yaml") >= 0) {
 			// run this only when we are in our workspacepath
 			// todo: make this more reliable and read it from yaml config instead
 			return
@@ -84,7 +84,7 @@ function activate(context) {
 		commandResult.data.forEach((res) => {
 			let resJSON = tryParseJSON(res);
 			
-			if (resJSON.level == "error" && resJSON.error) {
+			if (resJSON.level === "error" && resJSON.error) {
 				return vscode.window.showErrorMessage(
 					"There was an error while downloading your entry! (" + resJSON.error + ")",
 				);
@@ -190,7 +190,7 @@ function activate(context) {
 			);
 
 			// update the status bar to reflect new changes if any
-			updateStatusBarItem(vscode.window.activeTextEditor, updatesetStatusBarItem);
+			await updateStatusBarItem(vscode.window.activeTextEditor, updatesetStatusBarItem);
 		}
 	}));
 

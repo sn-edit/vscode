@@ -39,7 +39,7 @@ const updateStatusBarItem = async (editor, statusbarItem) => {
 		if (resJSON && resJSON.current) {
 			actualText = statusbarItem.text;
 			let newText = `SNEDIT $(files) Update set: ${resJSON.current.name}`;
-			if (newText != actualText) {
+			if (newText !== actualText) {
 				statusbarItem.text = newText;
 			}
 		} else {

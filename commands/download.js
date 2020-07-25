@@ -52,7 +52,7 @@ const downloadCMD = async() => {
     commandResult.data.forEach((res) => {
         let resJSON = tryParseJSON(res);
         
-        if (resJSON.level == "error" && resJSON.error) {
+        if (resJSON.level === "error" && resJSON.error) {
             return vscode.window.showErrorMessage(
                 "There was an error while downloading your entry! (" + resJSON.error + ")",
             );

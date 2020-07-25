@@ -39,7 +39,7 @@ const searchCMD = async (options) => {
 		}
     });
     
-    if (result == false) {
+    if (result === false) {
         return vscode.window.showErrorMessage(
             "Could not find results in the response!"
         );

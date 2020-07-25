@@ -4,13 +4,25 @@
 	"description": "Servicenow Script Editor Engine (sn-edit.com)",
 	"publisher": "snedit",
 	"version": "0.0.1",
-	"repository": "https://github.com/sn-edit/vscode",
+	"bugs": {
+		"url": "https://github.com/sn-edit/vscode/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/sn-edit/vscode.git"
+	},
+	"homepage": "https://docs.sn-edit.com",
+	"license": "SEE LICENSE IN LICENSE",
+	"author": {
+		"name": "Richard Szolár <r@richardszolar.me>"
+	},
 	"engines": {
 		"vscode": "^1.44.0"
 	},
 	"categories": [
-		"Other"
+		"Programming", "Other"
 	],
+	"keywords": ["servicenow", "servicenow-extension", "sn-edit", "script editor"],
 	"activationEvents": [
 		"*",
 		"onCommand:sn-edit.download",

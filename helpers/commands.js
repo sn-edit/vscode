@@ -1,9 +1,5 @@
-const {
-    tryParseJSON
-} = require('../helpers/json');
-const {
-    initExtension
-} = require("../core/config");
+const { tryParseJSON } = require('../helpers/json');
+const { initExtension } = require("../core/config");
 
 // run a command
 // accepts an array of parameters
@@ -11,10 +7,10 @@ const {
 const runCommand = async (command) => {
     return new Promise((resolve, reject) => {
         const engine = initExtension();
-        
+
         if (engine.error) {
-			return;
-		}
+            return;
+        }
 
         let json = false;
 
@@ -25,7 +21,7 @@ const runCommand = async (command) => {
 
         // check if we expect a json result
         command.forEach((el) => {
-            if (el == "--json") {
+            if (el === "--json") {
                 json = true;
             }
         });
@@ -73,8 +69,8 @@ const runCommand = async (command) => {
         //     console.log('Exit code:', code);
         //     console.log('Program output:', stdout);
         //     console.log('Program stderr:', stderr);
-            
-            
+
+
         // });
     });
 };
@@ -93,7 +89,7 @@ const hasError = (jsonArray) => {
     // filter out array elements where the element is an empty string
     // this is the result of stdout \n at the end of every output
     jsonArray = jsonArray.filter((el) => {
-        return el != "";
+        return el !== "";
     });
 
     jsonArray.forEach(element => {
