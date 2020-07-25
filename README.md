@@ -19,6 +19,7 @@ The capabilities include:
 - We support searching for tables and their entries inside of vscode. After picking your entry, the entry gets downloaded locally
 - Support to run background scripts from local js files (Not supported by the extension yet, but supported by sn-edit)
 
-**Note**: I am not really experienced with building Visual Studio Code extensions, so I am looking for someone that could take it over and maintain it. Basic JS knowledge and some VSCode experience is needed. If you are interested, please send me an email with some references on your work as of now and we can talk about it.
+**Note**: If anyone feels capable enough to take up the challenge of maintaining this project let me know! Feel free to send feedback
+and improvement suggestions! Every help is welcome!
 
 We invite every one of you to contribute to this project to make it better for you and for everyone else. 
