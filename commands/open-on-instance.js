@@ -20,9 +20,6 @@ const openOnInstanceCMD = async () => {
     } catch (e) {
         data = null;
         console.log(e);
-        return vscode.window.showErrorMessage(
-			"Error while reading the config file! Please check permissions and try again!"
-		);
     }
 
     if (!data || !data["app"]["core"]["rest"]["url"]) {
