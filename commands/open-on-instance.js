@@ -1,5 +1,4 @@
 const vscode = require('vscode');
-// const { runCommand } = require("../helpers/commands");
 const fs = require('fs');
 const yaml = require('js-yaml');
 const { initExtension } = require('../core/config');

@@ -8,6 +8,7 @@ const { updateStatusBarItem } = require('./commands/display-updateset');
 const { versionCommand } = require('./commands/version');
 const { searchCMD } = require('./commands/search');
 const { downloadCMD } = require('./commands/download');
+const { openOnInstanceCMD } = require('./commands/open-on-instance');
 const { runCommand } = require("./helpers/commands");
 const { tryParseJSON } = require('./helpers/json');
 const { setStatusbarMessage } = require('./helpers/statusbar');
@@ -21,6 +22,9 @@ function activate(context) {
 	const { subscriptions } = context;
 	/* Download */
 	subscriptions.push(vscode.commands.registerCommand('sn-edit.download', downloadCMD));
+
+	/* Open on Instance */
+	subscriptions.push(vscode.commands.registerCommand('sn-edit.openOnInstance', openOnInstanceCMD));
 
 	// upload onsave
 	vscode.workspace.onDidSaveTextDocument(async (editor) => {

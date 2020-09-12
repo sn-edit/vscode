@@ -2,10 +2,23 @@
 
 All notable changes to the "sn-edit" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
 ## [Unreleased]
 - ...
+
+## v0.0.2
+New command "Open on Instance" [#15](https://github.com/sn-edit/vscode/issues/15)
+This command lets you open a currently edited entry on your instance
+I did set up a keyboard shortcut for it.
+
+Here are the combinations per platform:
+Windows: `ctrl+alt+X`
+Linux: `ctrl+alt+X`
+Mac: `shift+cmd+X`
+
+If this shortcut conflicts with something else you are using, you can change it under `File -> Preferences -> Keyboard Shortcuts`. Just search for `sn-edit` and change it as you wish.
+
+You can also run this command through the usual place, under the command palette.
+For this command to work correctly, you need to be inside of a workspace, with a `_config/.sn-edit.yaml` file present. I am reading the information regarding your instance url from this config file. The details should be valid, because this config file is used for downloading/uploading too.
 
 ## v0.0.1
 Initial release of the extension
