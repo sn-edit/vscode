@@ -3,7 +3,7 @@
 	"displayName": "SN-EDIT - Servicenow Editor engine",
 	"description": "Servicenow Editor Engine (sn-edit)",
 	"publisher": "snedit",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"icon": "images/sn-edit-logo.png",
 	"bugs": {
 		"url": "https://github.com/sn-edit/vscode/issues"
